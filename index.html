@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <script src="https://code.angularjs.org/1.3.15/angular.js"></script>
+    <!--<link rel="stylesheet" href="style.css" />-->
+    <script src="./assets/js/isteven-multi-select-4.0.0.js"></script>
+    <link href="./assets/css/isteven-multi-select-4.0.0.css" rel="stylesheet" />
+    <script src="./assets/js/script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .tags-container {
+        max-height: 200px;
+        overflow-y: scroll;
+      }
+      p {
+        margin-bottom: 0.5rem;
+        font-size: 18px;
+      }
+      .checkboxLayer {
+        max-width: 1000px;
+        width: 100%;
+      }
+      .checkBoxContainer {
+        display: flex !important;
+        flex-wrap: wrap;
+      }
+      .multiSelect .multiSelectItem {
+        width: 33%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div ng-controller="myController">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button
+                        class="btn btn-link text-dark font-weight-bold"
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        Select Websites
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div
+                    id="collapseOne"
+                    class="collapse show"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <p>Select Websites</p>
+                      <div
+                        isteven-multi-select
+                        input-model="websitesList"
+                        output-model="websitesSelected"
+                        button-label="a name"
+                        item-label="icon name maker"
+                        max-labels="1"
+                        tick-property="isOn"
+                        search-property="name"
+                        on-item-click="activeContinueButton()"
+                        translation="selectText"
+                        ng-cloak
+                      ></div>
+                      <div class="tags-container" ng-cloak>
+                        <span
+                          ng-repeat="website in websitesSelected"
+                          href="#"
+                          class="badge badge-info mt-2 m-1"
+                          >{{website.name}}
+                          <span
+                            tag-data="{{website.name}}"
+                            class="cursor-pointer"
+                            style="cursor: pointer"
+                            ng-click="removeItem($event, websitesSelected, websitesList)"
+                            >X</span
+                          >
+                        </span>
+                      </div>
+
+                      <button
+                        class="btn btn-info mt-2"
+                        data-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                        id="websiteContinueButton"
+                        ng-click="activeWebsiteContinueButton()"
+                      >
+                        Continue
+                      </button>
+                      <!-- <p>{{websitesSelected}}</p> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button
+                        class="btn btn-link collapsed text-dark font-weight-bold"
+                        data-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                        id="collapseTwoAcordeon"
+                        ng-click="activeWebsiteContinueButton()"
+                      >
+                        Select Services
+                      </button>
+                    </h5>
+                  </div>
+                  <div
+                    id="collapseTwo"
+                    class="collapse"
+                    aria-labelledby="headingTwo"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <!--Services-->
+                      <p>Select Services</p>
+                      <div
+                        isteven-multi-select
+                        input-model="servicesList"
+                        output-model="servicesSelected"
+                        button-label="name"
+                        item-label="icon name maker"
+                        max-labels="1"
+                        tick-property="isOn"
+                        search-property="name"
+                        on-item-click="activeContinueButton()"
+                        translation="selectText"
+                        ng-cloak
+                      ></div>
+                      <div class="tags-container" ng-cloak>
+                        <span
+                          ng-repeat="service in servicesSelected"
+                          href="#"
+                          class="badge badge-info mt-2 m-1"
+                          >{{service.name}}
+                          <span
+                            tag-data="{{service.name}}"
+                            class="cursor-pointer"
+                            style="cursor: pointer"
+                            ng-click="removeItem($event, servicesSelected, servicesList)"
+                            >X</span
+                          >
+                        </span>
+                      </div>
+                      <!-- <div
+                        isteven-multi-select
+                        input-model="servicesList"
+                        output-model="servicesSelected"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        max-labels="1"
+                        tick-property="isOn"
+                        ng-cloak
+                      ></div> -->
+                      <!-- <div class="tags-container" ng-cloak>
+                        <span
+                          ng-repeat="service in servicesSelected"
+                          href="#"
+                          tag-data="{{service.name}}"
+                          class="badge badge-info mt-2 m-1"
+                          >{{service.name}}
+                          <span
+                            tag-data="{{service.name}}"
+                            class="cursor-pointer"
+                            style="cursor: pointer"
+                            ng-click="removeItem2($event, servicesSelected, servicesList)"
+                            >X</span
+                          >
+                        </span>
+                      </div> -->
+                      <!-- {{servicesSelected}} -->
+                      <button
+                        class="btn btn-info mt-2"
+                        data-target="#collapseThree"
+                        aria-expanded="false"
+                        aria-controls="collapseThree"
+                        ng-click="activeServiceContinueButton()"
+                        id="serviceContinueButton"
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button
+                        class="btn btn-link collapsed text-dark font-weight-bold"
+                        data-target="#collapseThree"
+                        aria-expanded="false"
+                        aria-controls="collapseThree"
+                        id="selectCitiesAcordeon"
+                        ng-click="activeServiceContinueButton()"
+                      >
+                        Select Cities
+                      </button>
+                    </h5>
+                  </div>
+                  <div
+                    id="collapseThree"
+                    class="collapse"
+                    aria-labelledby="headingThree"
+                    data-parent="#accordion"
+                  >
+                    <div class="card-body">
+                      <!--City-->
+                      <p>Select City</p>
+                      <div
+                        isteven-multi-select
+                        input-model="citiesList"
+                        output-model="citiesSelected"
+                        button-label="name"
+                        item-label="icon name maker"
+                        max-labels="1"
+                        tick-property="isOn"
+                        search-property="name"
+                        on-item-click="activeContinueButton()"
+                        translation="selectText"
+                        ng-cloak
+                      ></div>
+                      <div class="tags-container" ng-cloak>
+                        <span
+                          ng-repeat="city in citiesSelected"
+                          href="#"
+                          class="badge badge-info mt-2 m-1"
+                          >{{city.name}}
+                          <span
+                            tag-data="{{city.name}}"
+                            class="cursor-pointer"
+                            style="cursor: pointer"
+                            ng-click="removeItem($event, citiesSelected, citiesList)"
+                            >X</span
+                          >
+                        </span>
+                      </div>
+                      <!-- {{citiesSelected}} -->
+                      <button
+                        type="button"
+                        class="btn btn-info mt-2"
+                        data-toggle="modal"
+                        id="citiesContinueButton"
+                        ng-click="activeCitiesContinueButton()"
+                      >
+                        Process
+                      </button>
+                      <!-- Modal -->
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">
+                                Do you want to continue?
+                              </h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>It will be processed:</p>
+                              <!--Website-->
+                              <p ng-show="websitesSelected.length == 1 ">
+                                {{websitesSelected.length}} Website
+                              </p>
+                              <p ng-show="websitesSelected.length > 1 ">
+                                {{websitesSelected.length}} Websites
+                              </p>
+
+                              <!--Services-->
+                              <p ng-show="servicesSelected.length == 1 ">
+                                {{servicesSelected.length}} Service
+                              </p>
+                              <p ng-show="servicesSelected.length > 1 ">
+                                {{servicesSelected.length}} Services
+                              </p>
+                              <!--City-->
+                              <p ng-show="citiesSelected.length == 1 ">
+                                {{citiesSelected.length}} City
+                              </p>
+                              <p ng-show="citiesSelected.length > 1 ">
+                                {{citiesSelected.length}} Cities
+                              </p>
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                              <button type="button" class="btn btn-info">
+                                Continue
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
